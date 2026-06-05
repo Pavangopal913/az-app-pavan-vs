@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="../../../../../../source/repos/azure-app-pavan-vs/azure-app-pavan-vs/azure-app-pavan-vs.csproj" />
-  <Project Path="../../../../../../source/repos/azure-app-pavan-vs/Mvc.StorageAccount.Demo/Mvc.StorageAccount.Demo.csproj" Id="2a697e0c-6f60-4c47-adc0-2e5d90064ec4" />
+  <Project Path="azure-app-pavan-vs/azure-app-pavan-vs.csproj" />
+  <Project Path="Mvc.StorageAccount.Demo/Mvc.StorageAccount.Demo.csproj" />
 </Solution>
