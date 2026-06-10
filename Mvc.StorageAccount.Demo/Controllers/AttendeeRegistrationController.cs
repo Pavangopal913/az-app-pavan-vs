@@ -1,14 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mvc.StorageAccount.Demo.Services;
 
 namespace Mvc.StorageAccount.Demo.Controllers
 {
     public class AttendeeRegistrationController : Controller
     {
-        // GET: AttendeeRegistrationController
-        public ActionResult Index()
+        private readonly ITableStorageService _tableStorageService;
+
+        public AttendeeRegistrationController(ITableStorageService tableStorageService)
         {
-            return View();
+            _tableStorageService = tableStorageService;
+        }
+
+        // GET: AttendeeRegistrationController
+        public async Task<IActionResult> IndexAsync()
+        {
+            var data = await _tableStorageService.GetAttendees();
+            return View(data);
         }
 
         // GET: AttendeeRegistrationController/Details/5

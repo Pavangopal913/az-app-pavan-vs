@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using azure_app_pavan_vs.Data;
 
-namespace azure-app-pavan-vs.Pages.PersonPages;
+namespace azure_app_pavan_vs.Pages.PersonPages;
 
 public class CreateModel : PageModel
 {

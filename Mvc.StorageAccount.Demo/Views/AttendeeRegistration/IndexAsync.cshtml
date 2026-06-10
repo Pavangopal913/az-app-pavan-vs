@@ -1,0 +1,46 @@
+@model IEnumerable<Mvc.StorageAccount.Demo.Data.AttendeeEntity>
+
+@{
+    ViewData["Title"] = "Attendees";
+}
+
+<h1>Attendees</h1>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No attendees found.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Industry</th>
+                <th>Partition Key</th>
+                <th>Row Key</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item?.FirstName</td>
+                <td>@item?.LastName</td>
+                <td>@item?.EmailAddress</td>
+                <td>@item?.Industry</td>
+                <td>@item?.PartitionKey</td>
+                <td>@item?.RowKey</td>
+                <td>@(item?.Timestamp?.ToString("g") ?? string.Empty)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
