@@ -38,7 +38,7 @@ namespace Mvc.StorageAccount.Demo.Services
             await tableClient.DeleteEntityAsync(industry, id);
         }
 
-        public async Task<TableClient> GetTableClient()
+        private async Task<TableClient> GetTableClient()
         {
             var serviceClient = new TableServiceClient(_configuration["StorageConnectionStrings"]);
             

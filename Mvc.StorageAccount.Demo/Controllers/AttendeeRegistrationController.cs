@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mvc.StorageAccount.Demo.Data;
 using Mvc.StorageAccount.Demo.Services;
 
 namespace Mvc.StorageAccount.Demo.Controllers
@@ -21,9 +22,10 @@ namespace Mvc.StorageAccount.Demo.Controllers
         }
 
         // GET: AttendeeRegistrationController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> DetailsAsync(string id, string industry)
         {
-            return View();
+            var data = await _tableStorageService.GetAttendee(id, industry);
+            return View(data);
         }
 
         // GET: AttendeeRegistrationController/Create
@@ -35,11 +37,16 @@ namespace Mvc.StorageAccount.Demo.Controllers
         // POST: AttendeeRegistrationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(AttendeeEntity attendeeEntity)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                attendeeEntity.PartitionKey = attendeeEntity.Industry;
+                attendeeEntity.RowKey = Guid.NewGuid().ToString();
+
+                await _tableStorageService.UpsertAttendee(attendeeEntity);
+
+                return RedirectToAction(nameof(IndexAsync));
             }
             catch
             {
@@ -48,19 +55,24 @@ namespace Mvc.StorageAccount.Demo.Controllers
         }
 
         // GET: AttendeeRegistrationController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(string id, string industry)
         {
-            return View();
+            var data = await _tableStorageService.GetAttendee(id, industry);
+            return View(data);
         }
 
         // POST: AttendeeRegistrationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, AttendeeEntity attendeeEntity)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                attendeeEntity.PartitionKey = attendeeEntity.Industry;
+
+                await _tableStorageService.UpsertAttendee(attendeeEntity);
+
+                return RedirectToAction(nameof(IndexAsync));
             }
             catch
             {
@@ -68,20 +80,15 @@ namespace Mvc.StorageAccount.Demo.Controllers
             }
         }
 
-        // GET: AttendeeRegistrationController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: AttendeeRegistrationController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id, string industry)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                await _tableStorageService.DeleteAttendee(id, industry);
+                return RedirectToAction(nameof(IndexAsync));
             }
             catch
             {
